@@ -15,7 +15,8 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./component/LoginPage";
-import Dashboard from "./component/Dashboard";
+import Dashboard from "./component/Dashboard"; 
+import StudentDashboard from "./component/StudentDashboard";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
       </Routes>
     </BrowserRouter>
   );
