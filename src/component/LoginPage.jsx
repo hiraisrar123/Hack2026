@@ -1,27 +1,40 @@
 import { useState } from "react";
-import logo from "../assets/photo.jpeg"
+import logo from "../assets/photo.jpeg";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [role, setRole] = useState("student");
-  const navigate = useNavigate(); // router navigate
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   // Form submit handler
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Role ke hisaab se dashboard par redirect
-    if (role === "student") {
+    // Admin login check
+    if (
+      role === "admin" &&
+      email === "admin@gmail.com" &&
+      password === "admin123"
+    ) {
+      navigate("/dashboard");
+    }
+
+    // Student login
+    else if (role === "student") {
       navigate("/student-dashboard");
-    } else {
-      navigate("/dashboard"); // admin dashboard
+    }
+
+    // Agar admin ne galat email/password dala
+    else {
+      alert("Invalid Admin Credentials");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
-        
         {/* Left Section */}
         <div className="relative bg-linear-to-br from-green-50 to-green-100 p-10 flex flex-col justify-center">
           <div className="absolute top-0">
@@ -47,7 +60,9 @@ const LoginPage = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full mt-1 px-4 py-2 border rounded-lg"
                 required
               />
             </div>
@@ -57,7 +72,9 @@ const LoginPage = () => {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full mt-1 px-4 py-2 border rounded-lg"
                 required
               />
             </div>
@@ -68,7 +85,9 @@ const LoginPage = () => {
                 type="button"
                 onClick={() => setRole("student")}
                 className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
-                  role === "student" ? "bg-white shadow text-green-600" : "text-gray-600"
+                  role === "student"
+                    ? "bg-white shadow text-green-600"
+                    : "text-gray-600"
                 }`}
               >
                 Student
@@ -77,7 +96,9 @@ const LoginPage = () => {
                 type="button"
                 onClick={() => setRole("admin")}
                 className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
-                  role === "admin" ? "bg-white shadow text-green-600" : "text-gray-600"
+                  role === "admin"
+                    ? "bg-white shadow text-green-600"
+                    : "text-gray-600"
                 }`}
               >
                 Admin
